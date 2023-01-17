@@ -5,13 +5,13 @@ import time
 
 
 def train(device, ds):
-    batch_size = 1000
+    batch_size = 2000
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
     x_size = ds.get_x().shape[1]
     model = LucasMachine(size = x_size)
     model.train()
     model.to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.001)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=0.001)
     criterion = torch.nn.MSELoss(reduction='sum')
     num_epochs = 300
     n_batches = int(len(ds)/batch_size) + 1
