@@ -5,7 +5,7 @@ import evaluate
 import os
 
 
-if __name__ == "__main__":
+def process(dt):
     columns = {"linear" : "Linear", "rf" : "RF", "nn" : "NN"}
     params = [
         "rgb",
@@ -13,13 +13,13 @@ if __name__ == "__main__":
         "hsv_xy",
         "XYZ",
         "xyY",
-        "lab"
+        "cielab"
     ]
     data = np.zeros((len(params), len(columns)))
     column_values = [columns[key] for key in columns.keys()]
     names = [par for par in params]
 
-    path = "results2.csv"
+    path = f"results_{dt}.csv"
 
     if os.path.exists(path):
         df = pd.read_csv(path)
@@ -33,11 +33,11 @@ if __name__ == "__main__":
             if data[index_par][index_col] != 0:
                 print("Was done already: ", data[index_par][index_col])
             else:
-                ds = ds_manager.DSManager(par)
+                ds = ds_manager.DSManager(dt, par)
                 r2s = evaluate.r2(ds, col)
                 r2_mean = np.mean(r2s)
                 print(par, col, r2_mean)
-                r2_log = open("r2_log.txt", "a")
+                r2_log = open(f"r2_log_{dt}.txt", "a")
                 r2_log.write(f"{col} - {par}: {str(r2s)}\n")
                 r2_log.close()
                 data[index_par][index_col] = r2_mean
@@ -45,3 +45,7 @@ if __name__ == "__main__":
                 df.to_csv(path)
 
     print("Done all")
+
+
+if __name__ == "__main__":
+    process("mangrove")

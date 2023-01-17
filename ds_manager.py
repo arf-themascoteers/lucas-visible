@@ -12,8 +12,8 @@ import colour
 
 
 class DSManager:
-    def __init__(self, cspace):
-        csv_file_location = f"data_{cspace}.csv"
+    def __init__(self, dt, cspace):
+        csv_file_location = f"data_{dt}_{cspace}.csv"
         df = pd.read_csv(csv_file_location)
         npdf = df.to_numpy()
         npdf = self._normalize(npdf)
