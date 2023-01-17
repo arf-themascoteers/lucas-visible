@@ -5,8 +5,8 @@ from torch.utils.data import Dataset
 class LucasDataset(Dataset):
     def __init__(self, source):
         self.df = source
-        self.y = source[:,0]
-        self.x = source[:,1:]
+        self.x = source[:,0:-1]
+        self.y = source[:,-1]
 
     def __len__(self):
         return len(self.df)
