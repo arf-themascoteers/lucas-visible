@@ -18,8 +18,10 @@ def process(base):
 
     one_time_convert_hsv.process(rgb, hsv)
     one_time_convert_hsv_xy.process(hsv, hsv_xy)
-    one_time_convert_XYZ.process(hsv, hsv_xy)
+    one_time_convert_XYZ.process(rgb, XYZ_original, XYZ)
+    one_time_convert_xyY.process(XYZ_original, xyY_original, xyY)
+    one_time_convert_cielab.process(XYZ_original, cielab_original, cielab)
 
 
 if __name__ == "__main__":
-    process("lucas")
+    process("mangrove")
