@@ -11,7 +11,7 @@ def train(device, ds):
     model = LucasMachine(size = x_size)
     model.train()
     model.to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=0.001)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.001)
     criterion = torch.nn.MSELoss(reduction='sum')
     num_epochs = 300
     n_batches = int(len(ds)/batch_size) + 1
@@ -30,13 +30,13 @@ def train(device, ds):
             optimizer.step()
             optimizer.zero_grad()
             batch_number += 1
-            #print(f'Epoch:{epoch + 1} (of {num_epochs}), Batch: {batch_number} of {n_batches}, Loss:{loss.item():.6f}')
+            print(f'Epoch:{epoch + 1} (of {num_epochs}), Batch: {batch_number} of {n_batches}, Loss:{loss.item():.6f}')
 
     #print("Train done")
     end = time.time()
     required = end - start
     #print(f"Train seconds: {required}")
-    torch.save(model, 'models/soc.h5')
+    torch.save(model, 'ann.h5')
     return model
 
 #
