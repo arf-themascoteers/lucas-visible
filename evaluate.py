@@ -38,6 +38,5 @@ def r2(dm, model):
         r2 = calculate_r2(train_ds, test_ds, model)
         print(r2)
         r2s.append(r2)
-        break
 
     return np.array(r2s)
