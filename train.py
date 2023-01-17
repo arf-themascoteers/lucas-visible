@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
-from lucas_machine import LucasMachine
+from model_ann import LucasMachine
 import time
 
 
@@ -8,11 +8,7 @@ def train(device, ds):
     batch_size = 250
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
     x_size = ds.get_x().shape[1]
-    mid = 2
-    if x_size < 10:
-        mid = 500
-        batch_size = 500
-    model = LucasMachine(size = x_size, mid = mid)
+    model = LucasMachine(size = x_size)
     model.train()
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.001)

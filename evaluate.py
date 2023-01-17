@@ -21,7 +21,7 @@ def calculate_r2(train_ds, test_ds, model):
         if model == "linear":
             model_instance = LinearRegression()
         elif model == "rf":
-            model_instance = RandomForestRegressor(max_depth=5, n_estimators=1000)
+            model_instance = RandomForestRegressor(max_depth=5, n_estimators=100)
 
         model_instance = model_instance.fit(train_x, train_y)
         return model_instance.score(test_x, test_y)
@@ -29,7 +29,6 @@ def calculate_r2(train_ds, test_ds, model):
 
 def r2_once(dm, model):
     r2 = calculate_r2(dm.get_train_ds(), dm.get_test_ds(), model)
-    print(r2)
     return r2
 
 
