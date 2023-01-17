@@ -4,8 +4,8 @@ import torch
 from sklearn.metrics import r2_score
 
 dm = DSManager("lucas", "hsv")
-# r2 = evaluate.r2_once(dm,"nn")
-# print(r2)
+r2 = evaluate.r2_once(dm,"nn")
+print(r2)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = torch.load("ann.h5")
 test_ds = dm.get_test_ds()
