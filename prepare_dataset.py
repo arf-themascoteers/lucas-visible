@@ -1,3 +1,4 @@
+import one_time_lucas_rgb_abs_to_refl
 import one_time_convert_hsv
 import one_time_convert_hsv_xy
 import one_time_convert_XYZ
@@ -24,4 +25,5 @@ def process(base):
 
 
 if __name__ == "__main__":
-    process("mangrove")
+    one_time_lucas_rgb_abs_to_refl.process()
+    process("lucas")

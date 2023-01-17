@@ -4,7 +4,7 @@ import numpy as np
 
 
 def process():
-    df = pd.read_csv("data_rgb_absorbance.csv")
+    df = pd.read_csv("data_lucas_rgb_absorbance.csv")
     npdf = df.to_numpy()
     npdf[:, 0:3] = 1 / (10 ** npdf[:, 0:3])
     #npdf[:, 0:3] = npdf[:, 0:3] / np.max(npdf[:, 0:3])
