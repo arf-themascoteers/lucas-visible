@@ -44,12 +44,3 @@ class DSManager:
         return data
 
 
-if __name__ == "__main__":
-    dm = DSManager("rgb")
-    train_ds = dm.get_train_ds()
-    dataloader = DataLoader(train_ds, batch_size=1, shuffle=True)
-    for x, soc in dataloader:
-        print(x)
-        print(x.shape[1])
-        print(soc)
-        exit(0)

@@ -3,6 +3,7 @@ from train import train
 from test import test
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
 import numpy as np
 
 
@@ -22,6 +23,8 @@ def calculate_r2(train_ds, test_ds, model):
             model_instance = LinearRegression()
         elif model == "rf":
             model_instance = RandomForestRegressor(max_depth=5, n_estimators=100)
+        elif model == "svr":
+            model_instance = SVR()
 
         model_instance = model_instance.fit(train_x, train_y)
         return model_instance.score(test_x, test_y)

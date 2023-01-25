@@ -9,10 +9,8 @@ class LucasMachine(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(size, mid),
             nn.LeakyReLU(),
-            nn.BatchNorm1d(mid),
             nn.Linear(mid, 20),
             nn.LeakyReLU(),
-            nn.BatchNorm1d(20),
             nn.Linear(20, 10),
             nn.LeakyReLU(),
             nn.Linear(10, 1)
