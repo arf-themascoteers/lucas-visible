@@ -193,7 +193,7 @@ class Evaluator:
             if algorithm == "linear":
                 model_instance = LinearRegression()
             elif algorithm == "plsr":
-                model_instance = PLSRegression()
+                model_instance = PLSRegression(n_components=2)
             elif algorithm == "rf":
                 model_instance = RandomForestRegressor(max_depth=5, n_estimators=100)
             elif algorithm == "svr":
