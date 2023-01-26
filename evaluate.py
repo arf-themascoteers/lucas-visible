@@ -29,13 +29,6 @@ def calculate_r2(train_ds, test_ds, model):
         model_instance = model_instance.fit(train_x, train_y)
         return model_instance.score(test_x, test_y)
 
-
-def r2_once(dm, model):
-    r2 = calculate_r2(dm.get_train_ds(), dm.get_test_ds(), model)
-    return r2
-
-x = 0
-
 def r2(dm, model):
     r2s = []
     for train_ds, test_ds in dm.get_10_folds():
