@@ -1,21 +1,22 @@
-import one_time_lucas_rgb_abs_to_refl
-import one_time_convert_hsv
-import one_time_convert_hsv_xy
-import one_time_convert_XYZ
-import one_time_convert_xyY
-import one_time_convert_cielab
+from oneoff import one_time_convert_cielab, one_time_convert_hsv, one_time_convert_hsv_xy, one_time_convert_xyY, one_time_convert_XYZ
+from oneoff.lucas import one_time_lucas_rgb_abs_to_refl
+from oneoff.raca import one_time_raca_rgb_normalize
+import os
 
 
 def process(base):
-    rgb = f"data_{base}_rgb.csv"
-    hsv = f"data_{base}_hsv.csv"
-    hsv_xy = f"data_{base}_hsv_xy.csv"
-    XYZ_original = f"data_{base}_XYZ_original.csv"
-    XYZ = f"data_{base}_XYZ.csv"
-    xyY_original = f"data_{base}_xyY_original.csv"
-    xyY = f"data_{base}_xyY.csv"
-    cielab_original = f"data_{base}_cielab_original.csv"
-    cielab = f"data_{base}_cielab.csv"
+    basedir = f"data/{base}"
+    if not os.path.exists(basedir):
+        os.makedirs(basedir)
+    rgb = f"{basedir}/rgb.csv"
+    hsv = f"{basedir}/hsv.csv"
+    hsv_xy = f"{basedir}/hsv_xy.csv"
+    XYZ_original = f"{basedir}/XYZ_original.csv"
+    XYZ = f"{basedir}/XYZ.csv"
+    xyY_original = f"{basedir}/xyY_original.csv"
+    xyY = f"{basedir}/xyY.csv"
+    cielab_original = f"{basedir}/cielab_original.csv"
+    cielab = f"{basedir}/cielab.csv"
 
     one_time_convert_hsv.process(rgb, hsv)
     one_time_convert_hsv_xy.process(hsv, hsv_xy)
@@ -23,7 +24,11 @@ def process(base):
     one_time_convert_xyY.process(XYZ_original, xyY_original, xyY)
     one_time_convert_cielab.process(XYZ_original, cielab_original, cielab)
 
+    print("Done preparing all datasets for",base)
+
 
 if __name__ == "__main__":
-    one_time_lucas_rgb_abs_to_refl.process()
-    process("lucas")
+    # one_time_lucas_rgb_abs_to_refl.process()
+    # process("lucas")
+    one_time_raca_rgb_normalize.process()
+    process("raca")

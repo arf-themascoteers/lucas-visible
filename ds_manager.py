@@ -1,19 +1,14 @@
 from lucas_dataset import LucasDataset
 from sklearn import model_selection
 import pandas as pd
-from torch.utils.data import DataLoader
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
-import colorsys
 from sklearn.model_selection import KFold
-import time
-import colour
-
 
 
 class DSManager:
     def __init__(self, dt, cspace):
-        csv_file_location = f"data_{dt}_{cspace}.csv"
+        csv_file_location = f"data/{dt}/{cspace}.csv"
         df = pd.read_csv(csv_file_location)
         npdf = df.to_numpy()
         npdf = self._normalize(npdf)
@@ -35,6 +30,12 @@ class DSManager:
             train_data = self.full_data[train_index]
             test_data = self.full_data[test_index]
             yield LucasDataset(train_data), LucasDataset(test_data)
+
+    def get_count_itr(self):
+        i = 0
+        for train_ds, test_ds in self.get_10_folds():
+            i = i+1
+        return i
 
     def _normalize(self, data):
         for i in range(data.shape[1]):

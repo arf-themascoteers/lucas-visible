@@ -1,10 +1,12 @@
 import pandas as pd
-import colour
-import numpy as np
+import os
 
 
 def process():
-    df = pd.read_csv("data_lucas_rgb_absorbance.csv")
+    basedir = f"data/lucas"
+    if not os.path.exists(basedir):
+        os.makedirs(basedir)
+    df = pd.read_csv("data/lucas_rgb_absorbance.csv")
     npdf = df.to_numpy()
     npdf[:, 0:3] = 1 / (10 ** npdf[:, 0:3])
     #npdf[:, 0:3] = npdf[:, 0:3] / np.max(npdf[:, 0:3])
@@ -15,7 +17,7 @@ def process():
     print(npdf[:, 1].max())
     print(npdf[:, 2].max())
     df = pd.DataFrame(npdf, columns = ['r','g','b','oc'])
-    df.to_csv("data_lucas_rgb.csv", index=False)
+    df.to_csv(f"{basedir}/rgb.csv", index=False)
     print("done")
 
 

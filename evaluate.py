@@ -34,6 +34,7 @@ def r2_once(dm, model):
     r2 = calculate_r2(dm.get_train_ds(), dm.get_test_ds(), model)
     return r2
 
+x = 0
 
 def r2(dm, model):
     r2s = []
