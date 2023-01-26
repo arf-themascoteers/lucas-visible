@@ -14,7 +14,7 @@ from sklearn.svm import SVR
 
 class Evaluator:
     def __init__(self):
-        self.datasets = ["lucas", "raca"]
+        self.datasets = ["lucas", "raca", "oss"]
         self.algorithms = ["linear", "plsr", "rf", "svr", "nn"]
         self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
         self.summary = np.zeros((len(self.colour_spaces) * len(self.datasets), len(self.algorithms)))
@@ -71,7 +71,7 @@ class Evaluator:
     def set_details(self, index_algorithm, index_colour_space, index_dataset, itr_no, score):
         details_row = self.get_details_row(index_dataset, itr_no)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
-        self.details[details_row][details_column] = score
+        self.details[details_row][details_column] = round(score,3)
 
 
     def get_folds(self, dataset):

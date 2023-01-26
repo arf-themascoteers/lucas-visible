@@ -1,6 +1,7 @@
 from oneoff import one_time_convert_cielab, one_time_convert_hsv, one_time_convert_hsv_xy, one_time_convert_xyY, one_time_convert_XYZ
 from oneoff.lucas import one_time_lucas_rgb_abs_to_refl
 from oneoff.raca import one_time_raca_rgb_normalize
+from oneoff.oss import one_time_oss_rgb_normalize
 import os
 
 
@@ -30,5 +31,7 @@ def process(base):
 if __name__ == "__main__":
     # one_time_lucas_rgb_abs_to_refl.process()
     # process("lucas")
-    one_time_raca_rgb_normalize.process()
-    process("raca")
+    # one_time_raca_rgb_normalize.process()
+    # process("raca")
+    one_time_oss_rgb_normalize.process()
+    process("oss")
