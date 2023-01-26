@@ -87,9 +87,10 @@ class Evaluator:
 
     def sync_details_file(self):
         if not os.path.exists(self.details_file):
-            f = open(self.details_file, "w")
-            f.close()
-
+            self.write_details()
+        df = pd.read_csv(self.details_file)
+        df.drop(columns=df.columns[0], axis=1, inplace=True)
+        self.details = df.to_numpy()
 
     def create_log_file(self):
         log_file = open(self.log_file, "a")
