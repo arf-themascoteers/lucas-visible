@@ -61,10 +61,10 @@ class Evaluator:
         row = self.get_summary_row(index_dataset, index_colour_space)
         return self.summary[row][index_algorithm]
 
-    def process_dataset_algorithm_colour_space(self, index_dataset, index_algorithm, index_colour_space):
-        dataset = self.datasets[index_dataset]
+    def process_algorithm_colour_space_dataset(self, index_algorithm, index_colour_space, index_dataset):
         algorithm = self.algorithms[index_algorithm]
         colour_space = self.colour_spaces[index_colour_space]
+        dataset = self.datasets[index_dataset]
         print("Start", f"{dataset} - {algorithm} - {colour_space}")
 
         if self.get_score(index_dataset, index_algorithm, index_colour_space) != 0:
@@ -78,17 +78,17 @@ class Evaluator:
             self.set_score(index_dataset, index_algorithm, index_colour_space, r2_mean)
             self.write_summary()
 
-    def process_dataset_algorithm(self, index_dataset, index_algorithm):
-        for index_colour_space, colour_space in enumerate(self.colour_spaces):
-            self.process_dataset_algorithm_colour_space(index_dataset, index_algorithm, index_colour_space)
+    def process_algorithm_colour_space(self, index_algorithm, index_colour_space):
+        for index_dataset, dataset in enumerate(self.datasets):
+            self.process_algorithm_colour_space_dataset(index_algorithm, index_colour_space, index_dataset)
 
-    def process_dataset(self, index_dataset):
-        for index_algorithm, algorithm in enumerate(self.algorithms):
-            self.process_dataset_algorithm(index_dataset, index_algorithm)
+    def process_algorithm(self, index_algorithm):
+        for index_colour_space, colour_space in enumerate(self.colour_spaces):
+            self.process_algorithm_colour_space(index_algorithm, index_colour_space)
 
     def process(self):
-        for index_dataset, dataset in enumerate(self.datasets):
-            self.process_dataset(index_dataset)
+        for index_algorithm, algorithm in enumerate(self.algorithms):
+            self.process_algorithm(index_algorithm)
 
 
 if __name__ == "__main__":
