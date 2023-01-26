@@ -24,15 +24,15 @@ class Evaluator:
 
         self.summary_index = self.create_summary_index()
 
-        self.sync_summary_file()
-        self.sync_details_file()
-        self.create_log_file()
-
         self.folds = [self.get_folds(i) for i in self.datasets]
         self.detail_row_start = self.get_details_row_start()
         self.details = np.zeros((sum(self.folds), len(self.algorithms) * len(self.colour_spaces)))
         self.details_index = self.get_details_index()
         self.details_columns = self.get_details_columns()
+
+        self.sync_summary_file()
+        self.sync_details_file()
+        self.create_log_file()
 
         self.TEST = False
         self.TEST_SCORE = 0
