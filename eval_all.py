@@ -33,7 +33,7 @@ class Evaluator:
         self.details_index = self.get_details_index()
         self.details_columns = self.get_details_columns()
 
-        self.TEST = True
+        self.TEST = False
         self.TEST_SCORE = 0
 
     def get_details_row_start(self):
