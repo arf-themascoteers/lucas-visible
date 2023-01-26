@@ -9,9 +9,9 @@ class LucasMachine(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(size, mid),
             nn.LeakyReLU(),
-            nn.Linear(mid, 20),
+            nn.Linear(mid, 10),
             nn.LeakyReLU(),
-            nn.Linear(20, 1)
+            nn.Linear(10, 1)
         )
 
     def forward(self, x):
