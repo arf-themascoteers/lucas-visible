@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import cv2
+import os
 
-rgbs = pd.read_csv("data_lucas_rgb.csv").to_numpy()
+os.chdir("../")
+rgbs = pd.read_csv("data/oss/rgb.csv").to_numpy()
 
 fig, ax = plt.subplots(1,1)
 

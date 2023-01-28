@@ -29,9 +29,9 @@ def process(base):
 
 
 if __name__ == "__main__":
-    # one_time_lucas_rgb_abs_to_refl.process()
-    # process("lucas")
+    one_time_lucas_rgb_abs_to_refl.process()
+    process("lucas")
     # one_time_raca_rgb_normalize.process()
     # process("raca")
-    one_time_oss_rgb_normalize.process()
-    process("oss")
+    # one_time_oss_rgb_normalize.process()
+    # process("oss")
