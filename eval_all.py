@@ -13,14 +13,21 @@ from sklearn.svm import SVR
 
 
 class Evaluator:
-    def __init__(self):
-        self.datasets = ["lucas", "raca", "oss"]
-        self.algorithms = ["linear", "plsr", "rf", "svr", "nn"]
-        self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
+    def __init__(self, datasets=None, algorithms=None, colour_space_models=None,prefix="", verbose=False):
+        self.datasets = datasets
+        if self.datasets is None:
+            self.datasets = ["lucas", "raca", "oss"]
+        self.algorithms = algorithms
+        if self.algorithms is None:
+            self.algorithms = ["linear", "plsr", "rf", "svr", "nn"]
+        self.colour_spaces = colour_space_models
+        if self.colour_spaces is None:
+            self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
+        self.verbose = verbose
         self.summary = np.zeros((len(self.colour_spaces) * len(self.datasets), len(self.algorithms)))
-        self.summary_file = f"summary.csv"
-        self.details_file = f"details.csv"
-        self.log_file = f"log.txt"
+        self.summary_file = f"results/{prefix}_summary.csv"
+        self.details_file = f"results/{prefix}_details.csv"
+        self.log_file = f"results/{prefix}_log.txt"
 
         self.summary_index = self.create_summary_index()
 
@@ -169,6 +176,8 @@ class Evaluator:
         scores = []
         for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
             score = self.calculate_score(train_ds, test_ds, algorithm)
+            if self.verbose:
+                print(score)
             scores.append(score)
             self.set_details(index_algorithm, index_colour_space, index_dataset, itr_no, score)
             self.write_details()
@@ -202,6 +211,7 @@ class Evaluator:
 
             model_instance = model_instance.fit(train_x, train_y)
             return model_instance.score(test_x, test_y)
+
 
 if __name__ == "__main__":
     ev = Evaluator()
