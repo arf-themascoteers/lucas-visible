@@ -1,3 +1,5 @@
+import os
+os.chdir("../")
 import torch
 from train import train
 from test import test
@@ -11,7 +13,7 @@ def calculate_r2(train_ds, test_ds):
     return test(device, test_ds, model_instance)
 
 
-dm = ds_manager.DSManager("lucas","hsv_xy")
+dm = ds_manager.DSManager("lucas","hsv", si=["soci", "ibs"])
 for train_ds, test_ds in dm.get_10_folds():
     print(calculate_r2(dm.train_ds, dm.test_ds))
     break
