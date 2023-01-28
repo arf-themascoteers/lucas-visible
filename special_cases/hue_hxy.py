@@ -1,6 +1,6 @@
 import os
 os.chdir("../")
-from eval_all import Evaluator
+from evaluator import Evaluator
 
 
 if __name__ == "__main__":

@@ -1,13 +1,13 @@
 import os
 os.chdir("../")
-from eval_all import Evaluator
+from evaluator import Evaluator
 
 
 if __name__ == "__main__":
     ev = Evaluator(
         datasets=["lucas"],
         algorithms=["nn"],
-        colour_space_models=["hsv"],
+        colour_space_models=["hsv", "hsv_xy"],
         prefix="lucas_hsv_nn",
         verbose=True
     )
