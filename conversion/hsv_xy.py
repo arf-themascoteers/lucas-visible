@@ -20,15 +20,6 @@ def process(inf, outf):
         mydata[i,0] = x
         mydata[i,1] = y
 
-    print(mydata[:, 0].min())
-    print(mydata[:, 1].min())
-    print(mydata[:, 2].min())
-    print(mydata[:, 3].min())
-    print(mydata[:, 0].max())
-    print(mydata[:, 1].max())
-    print(mydata[:, 2].max())
-    print(mydata[:, 3].max())
-
     df = pd.DataFrame(mydata, columns = ['HX', 'HY', 'S','V','oc'])
     df.to_csv(outf, index=False)
     print("done")
