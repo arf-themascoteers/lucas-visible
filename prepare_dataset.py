@@ -27,6 +27,6 @@ if __name__ == "__main__":
     one_time_lucas_rgb_abs_to_refl.process()
     process("lucas")
     process("raca")
-    process("oss")
+    process("ossl")
     process("demmin")
     print("All dataset done")

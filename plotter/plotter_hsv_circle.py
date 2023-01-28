@@ -12,7 +12,7 @@ plt.xlim(-1.5,1.5)
 plt.ylim(-1.5,1.5)
 axes.scatter(0, 0, color="red")
 a = plt.Circle(( 0 , 0 ), 1, fill=False, edgecolor="Green" )
-rgbs = pd.read_csv("data/oss/hsv_xy.csv").to_numpy()
+rgbs = pd.read_csv("data/ossl/hsv_xy.csv").to_numpy()
 x = rgbs[:,0]
 y = rgbs[:,1]
 axes.add_artist( a)

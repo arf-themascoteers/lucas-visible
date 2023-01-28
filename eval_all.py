@@ -16,7 +16,7 @@ class Evaluator:
     def __init__(self, datasets=None, algorithms=None, colour_space_models=None,prefix="", verbose=False):
         self.datasets = datasets
         if self.datasets is None:
-            self.datasets = ["lucas", "raca", "oss"]
+            self.datasets = ["lucas", "raca", "ossl", "demmin"]
         self.algorithms = algorithms
         if self.algorithms is None:
             self.algorithms = ["linear", "plsr", "rf", "svr", "nn"]

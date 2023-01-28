@@ -5,7 +5,7 @@ import cv2
 import os
 
 os.chdir("../")
-rgbs = pd.read_csv("data/oss/hsv.csv").to_numpy()
+rgbs = pd.read_csv("data/ossl/hsv.csv").to_numpy()
 #plt.xlim(0,1)
 fig, ax = plt.subplots(1,3)
 

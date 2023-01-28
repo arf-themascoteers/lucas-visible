@@ -4,10 +4,10 @@ import os
 
 
 def process():
-    basedir = f"data/oss"
+    basedir = f"data/ossl"
     if not os.path.exists(basedir):
         os.makedirs(basedir)
-    df = pd.read_csv("data/oss_rgb_raw.csv")
+    df = pd.read_csv("data/ossl_rgb_raw.csv")
     npdf = df.to_numpy()
     npdf[:, 0:3] = npdf[:, 0:3] / np.max(npdf[:, 0:3], axis = 0)
     print("max")
