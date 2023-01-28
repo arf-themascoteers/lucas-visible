@@ -28,5 +28,4 @@ if __name__ == "__main__":
     process("lucas")
     process("raca")
     process("ossl")
-    process("demmin")
     print("All dataset done")
