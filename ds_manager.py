@@ -1,4 +1,4 @@
-from lucas_dataset import LucasDataset
+from spectral_dataset import SpectralDataset
 from sklearn import model_selection
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -18,9 +18,23 @@ class DSManager:
             npdf = self._normalize(npdf)
         train, test = model_selection.train_test_split(npdf, test_size=0.2, random_state=1)
         self.full_data = np.concatenate((train, test), axis=0)
-        self.full_ds = LucasDataset(npdf)
-        self.train_ds = LucasDataset(train)
-        self.test_ds = LucasDataset(test)
+        self.full_ds = SpectralDataset(self.full_data)
+        self.train_ds = SpectralDataset(train)
+        self.test_ds = SpectralDataset(test)
+
+    @staticmethod
+    def equalize_datasets(ds1: SpectralDataset, ds2: SpectralDataset):
+        d1 = ds1.df
+        d2 = ds2.df
+        size = min(d1.shape[0], d2.shape[0])
+        return SpectralDataset(d1[0:size,:]), SpectralDataset(d2[0:size,:])
+
+    @staticmethod
+    def minify_datasets(ds: SpectralDataset, factor):
+        d = ds.df
+        size = d.shape[0]
+        size = int(size*factor)
+        return SpectralDataset(d[0:size,:])
 
     def get_test_ds(self):
         return self.test_ds
@@ -33,7 +47,7 @@ class DSManager:
         for i, (train_index, test_index) in enumerate(kf.split(self.full_data)):
             train_data = self.full_data[train_index]
             test_data = self.full_data[test_index]
-            yield LucasDataset(train_data), LucasDataset(test_data)
+            yield SpectralDataset(train_data), SpectralDataset(test_data)
 
     def get_count_itr(self):
         i = 0
@@ -73,14 +87,69 @@ class DSManager:
         return np.concatenate((base_features, soc), axis=1)
 
     def determine_si(self, rgb, a_si):
-        RED = 0
-        GREEN = 1
-        BLUE = 2
+        RED = rgb[:,0]
+        GREEN =  rgb[:,1]
+        BLUE =  rgb[:,2]
 
         if a_si == "soci":
-            return (rgb[:,BLUE]) / (rgb[:,RED] * rgb[:,GREEN])
+            return (BLUE) / (RED * GREEN)
 
         if a_si == "ibs":
-            return 1/(rgb[:,BLUE] ** 2)
+            return 1/(BLUE ** 2)
+
+        if a_si == "ikaw":
+            return RED - (BLUE) / (RED) + BLUE
+
+        if a_si == "rgri":
+            return (RED) / (GREEN)
+
+        if a_si == "difgb":
+            return (GREEN - BLUE)
+
+        if a_si == "difgr":
+            return (GREEN - RED)
+
+
+
+        if a_si == "ColFeatInd":
+            return (GREEN / BLUE)
+
+        if a_si == "RI":
+            return (RED**2) / ((BLUE)*(GREEN)**3)
+
+        if a_si == "CI":
+            return (RED - GREEN) / (RED + GREEN)
+
+        if a_si == "SI":
+            return (RED - BLUE) / (RED + BLUE)
+
+        if a_si == "BI":
+            return np.sqrt( (RED**2) + (GREEN**2))
+
+        if a_si == "HI":
+            return 2*(RED-GREEN-BLUE) / (GREEN - BLUE)
+
+        SUM = RED + BLUE + GREEN
+
+        if a_si == "rn":
+            return (RED) / (SUM)
+
+        if a_si == "gn":
+            return (GREEN) / (SUM)
+
+        if a_si == "bn":
+            return (BLUE) / (SUM)
+
+        if a_si == "ngrdi":
+            return (GREEN - RED) / (GREEN + RED)
+
+        if a_si == "difNorGB":
+            return (GREEN/SUM) - (BLUE/SUM)
 
         return None
+
+    @staticmethod
+    def si_list():
+        return ["soci", "ibs", "ikaw", "rgri", "difgb",
+                "difgr", "ColFeatInd", "RI", "CI", "SI",
+                "BI", "HI", "rn", "gn", "bn", "ngrdi", "difNorGB"]

@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torch
 
 
-class LucasMachine(nn.Module):
+class ANN(nn.Module):
     def __init__(self, size=3, mid=50):
         super().__init__()
         self.fc = nn.Sequential(

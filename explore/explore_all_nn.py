@@ -5,7 +5,7 @@ import numpy as np
 import ds_manager
 import os
 os.chdir("../")
-
+import pandas as pd
 
 
 def calculate_grads(dm:ds_manager.DSManager, c):
@@ -31,24 +31,16 @@ def calculate_grads(dm:ds_manager.DSManager, c):
     grads = (grads / torch.sum(grads))
     return grads[0].item(), grads[1].item(), grads[2].item()
 
-def grads(dm, c):
-    i0s = []
-    i1s = []
-    i2s = []
-    i0, i1, i2 = calculate_grads(dm, c)
-    print(i0, i1, i2)
-    i0s.append(i0)
-    i1s.append(i1)
-    i2s.append(i2)
 
-    return i0s, i1s, i2s
-
-for c in ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]:
-    print(c)
-    dm = ds_manager.DSManager("lucas", c)
-    i0s, i1s, i2s = grads(dm, c)
-    print("Mean grads")
-    print(sum(i0s) / len(i0s))
-    print(sum(i1s) / len(i1s))
-    print(sum(i2s) / len(i2s))
+results = np.zeros((15,3))
+for cspace, c in enumerate(["rgb", "hsv", "XYZ", "xyY", "cielab"]):
+    for col, ds in enumerate(["lucas", "raca", "ossl"]):
+        dm = ds_manager.DSManager(ds, c)
+        i0, i1, i2 = calculate_grads(dm, c)
+        start_index = cspace*3
+        results[start_index, col] = i0
+        results[start_index + 1, col] = i1
+        results[start_index + 2, col] = i2
+        df = pd.DataFrame(results, columns = ['lucas', 'raca', 'ossl'])
+        df.to_csv("impacts.csv", index=False)
 

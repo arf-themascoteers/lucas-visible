@@ -1,5 +1,5 @@
 import torch
-from lucas_dataset import LucasDataset
+from spectral_dataset import SpectralDataset
 from torch.utils.data import DataLoader
 from sklearn.metrics import r2_score
 import time

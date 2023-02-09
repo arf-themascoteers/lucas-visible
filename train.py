@@ -1,20 +1,20 @@
 import torch
 from torch.utils.data import DataLoader
-from model_ann import LucasMachine
+from model_ann import ANN
 import time
 
 
-def train(device, ds):
+def train(device, ds, model=None, num_epochs=300):
     torch.manual_seed(0)
     batch_size = 600
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
     x_size = ds.get_x().shape[1]
-    model = LucasMachine(size = x_size)
+    if model is None:
+        model = ANN(size = x_size)
     model.train()
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=0.001)
     criterion = torch.nn.MSELoss(reduction='sum')
-    num_epochs = 300
     n_batches = int(len(ds)/batch_size) + 1
     batch_number = 0
     loss = None
@@ -34,10 +34,10 @@ def train(device, ds):
             #print(f'Epoch:{epoch + 1} (of {num_epochs}), Batch: {batch_number} of {n_batches}, Loss:{loss.item():.6f}')
 
     #print("Train done")
-    end = time.time()
-    required = end - start
+    # end = time.time()
+    # required = end - start
     #print(f"Train seconds: {required}")
-    torch.save(model, 'ann.h5')
+    # torch.save(model, 'ann.h5')
     return model
 
 #

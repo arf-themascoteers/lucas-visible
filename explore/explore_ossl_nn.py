@@ -45,7 +45,7 @@ def grads(dm, c):
 
 for c in ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]:
     print(c)
-    dm = ds_manager.DSManager("lucas", c)
+    dm = ds_manager.DSManager("ossl", c)
     i0s, i1s, i2s = grads(dm, c)
     print("Mean grads")
     print(sum(i0s) / len(i0s))

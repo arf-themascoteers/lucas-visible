@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import Dataset
 
 
-class LucasDataset(Dataset):
+class SpectralDataset(Dataset):
     def __init__(self, source):
         self.df = source
         self.x = source[:,0:-1]
