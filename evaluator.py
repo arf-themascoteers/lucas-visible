@@ -23,6 +23,12 @@ class Evaluator:
         self.colour_spaces = colour_space_models
         if self.colour_spaces is None:
             self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
+        self.colour_space_names = []
+        for i in self.colour_spaces:
+            if isinstance(i, str):
+                self.colour_space_names.append(i)
+            if type(i) is dict:
+                self.colour_space_names.append(i["cspace"])
         self.verbose = verbose
         self.summary = np.zeros((len(self.colour_spaces) * len(self.datasets), len(self.algorithms)))
         self.summary_file = f"results/{prefix}_summary.csv"
