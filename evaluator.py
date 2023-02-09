@@ -172,7 +172,10 @@ class Evaluator:
         algorithm = self.algorithms[index_algorithm]
         colour_space = self.colour_spaces[index_colour_space]
         dataset = self.datasets[index_dataset]
-        ds = ds_manager.DSManager(dataset, colour_space)
+        if type(colour_space) is dict:
+            ds = ds_manager.DSManager(dataset, **colour_space)
+        else:
+            ds = ds_manager.DSManager(dataset, colour_space)
         scores = []
         for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
             score = self.calculate_score(train_ds, test_ds, algorithm)
