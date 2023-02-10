@@ -39,7 +39,7 @@ class Evaluator:
 
         self.folds = [self.get_folds(i) for i in self.datasets]
         self.detail_row_start = self.get_details_row_start()
-        self.details = np.zeros((sum(self.folds), len(self.algorithms) * len(self.colour_spaces)))
+        self.details = np.zeros((sum(self.folds)*10, len(self.algorithms) * len(self.colour_spaces)))
         self.details_index = self.get_details_index()
         self.details_columns = self.get_details_columns()
 
@@ -69,8 +69,10 @@ class Evaluator:
     def get_details_index(self):
         details_index = []
         for index_dataset, dataset in enumerate(self.datasets):
-            for fold in range(self.folds[index_dataset]):
-                details_index.append(f"{dataset}-{fold}")
+            for i in range(10):
+                for fold in range(self.folds[index_dataset]):
+                    num = i * 10 + fold
+                    details_index.append(f"{dataset}-{num}-{fold}")
         return details_index
 
     def get_details_row(self, index_dataset, itr_no):
@@ -85,6 +87,11 @@ class Evaluator:
         details_row = self.get_details_row(index_dataset, itr_no)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
         self.details[details_row][details_column] = round(score,3)
+
+    def get_details(self, index_algorithm, index_colour_space, index_dataset, itr_no):
+        details_row = self.get_details_row(index_dataset, itr_no)
+        details_column = self.get_details_column(index_algorithm, index_colour_space)
+        return self.details[details_row][details_column]
 
 
     def get_folds(self, dataset):
@@ -178,18 +185,21 @@ class Evaluator:
         algorithm = self.algorithms[index_algorithm]
         colour_space = self.colour_spaces[index_colour_space]
         dataset = self.datasets[index_dataset]
-        if type(colour_space) is dict:
-            ds = ds_manager.DSManager(dataset, **colour_space)
-        else:
-            ds = ds_manager.DSManager(dataset, colour_space)
         scores = []
-        for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
-            score = self.calculate_score(train_ds, test_ds, algorithm)
-            if self.verbose:
-                print(score)
-            scores.append(score)
-            self.set_details(index_algorithm, index_colour_space, index_dataset, itr_no, score)
-            self.write_details()
+        for i in range(10):
+            if type(colour_space) is dict:
+                ds = ds_manager.DSManager(dataset, **colour_space, random_state=i)
+            else:
+                ds = ds_manager.DSManager(dataset, colour_space, random_state=i)
+
+            for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
+                score = self.calculate_score(train_ds, test_ds, algorithm)
+                if self.verbose:
+                    print(score)
+                scores.append(score)
+                it_now = i*10 + itr_no
+                self.set_details(index_algorithm, index_colour_space, index_dataset, it_now, score)
+                self.write_details()
         return scores
 
     def calculate_score(self, train_ds, test_ds, algorithm):

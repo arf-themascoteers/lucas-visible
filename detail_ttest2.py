@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-df = pd.read_csv("play/details.csv")
+df = pd.read_csv("play/details3.csv")
 df2 = df.iloc[: , 1:]
 results = df2.to_numpy()
 
@@ -33,7 +33,5 @@ sns.heatmap(pvalues, mask = mask, vmax=.3, center=0,
             square=True, linewidths=.5, cbar_kws={"shrink": .5},
             xticklabels=columns, yticklabels=columns, annot=True
             )
-ax.invert_yaxis()
 plt.xticks(rotation=45)
-plt.yticks(rotation=0)
 plt.show()

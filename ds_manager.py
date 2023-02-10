@@ -7,7 +7,7 @@ from sklearn.model_selection import KFold
 
 
 class DSManager:
-    def __init__(self, dt, cspace, si=None, si_only=False, normalize = True):
+    def __init__(self, dt, cspace, si=None, si_only=False, normalize = True, random_state=0):
         if si is None:
             si = []
         csv_file_location = f"data/{dt}/{cspace}.csv"
@@ -16,7 +16,7 @@ class DSManager:
         npdf = self.process_si(dt, npdf, si, si_only)
         if normalize:
             npdf = self._normalize(npdf)
-        train, test = model_selection.train_test_split(npdf, test_size=0.2, random_state=1)
+        train, test = model_selection.train_test_split(npdf, test_size=0.2, random_state=random_state)
         self.full_data = np.concatenate((train, test), axis=0)
         self.full_ds = SpectralDataset(self.full_data)
         self.train_ds = SpectralDataset(train)
