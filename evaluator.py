@@ -83,13 +83,13 @@ class Evaluator:
         return len(self.colour_spaces) * index_algorithm + index_colour_space
 
 
-    def set_details(self, index_algorithm, index_colour_space, index_dataset, itr_no, score):
-        details_row = self.get_details_row(index_dataset, itr_no)
+    def set_details(self, index_algorithm, index_colour_space, index_dataset, it_now, score):
+        details_row = self.get_details_row(index_dataset, it_now)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
         self.details[details_row][details_column] = round(score,3)
 
-    def get_details(self, index_algorithm, index_colour_space, index_dataset, itr_no):
-        details_row = self.get_details_row(index_dataset, itr_no)
+    def get_details(self, index_algorithm, index_colour_space, index_dataset, it_now):
+        details_row = self.get_details_row(index_dataset, it_now)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
         return self.details[details_row][details_column]
 
@@ -193,11 +193,15 @@ class Evaluator:
                 ds = ds_manager.DSManager(dataset, colour_space, random_state=i)
 
             for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
-                score = self.calculate_score(train_ds, test_ds, algorithm)
+                it_now = i*10 + itr_no
+                score = self.get_details(index_algorithm, index_colour_space, index_dataset, it_now)
+                if score != 0:
+                    print(f"{it_now} done already")
+                else:
+                    score = self.calculate_score(train_ds, test_ds, algorithm)
                 if self.verbose:
                     print(score)
                 scores.append(score)
-                it_now = i*10 + itr_no
                 self.set_details(index_algorithm, index_colour_space, index_dataset, it_now, score)
                 self.write_details()
         return scores
