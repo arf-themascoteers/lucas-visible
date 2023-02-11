@@ -1,0 +1,4 @@
+,rf,nn
+lucas - hsv,0.726,0.733
+"lucas - {'cspace': 'hsv', 'si': ['soci', 'ibs', 'ikaw', 'rgri', 'difgb', 'difgr', 'ColFeatInd', 'RI', 'CI', 'SI', 'BI', 'HI', 'rn', 'gn', 'bn', 'ngrdi', 'difNorGB']}",0.733,0.726
+"lucas - {'cspace': 'hsv', 'si': ['soci', 'ibs', 'ikaw', 'rgri', 'difgb', 'difgr', 'ColFeatInd', 'RI', 'CI', 'SI', 'BI', 'HI', 'rn', 'gn', 'bn', 'ngrdi', 'difNorGB'], 'si_only': True}",0.728,0.733
