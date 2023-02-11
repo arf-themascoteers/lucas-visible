@@ -132,11 +132,21 @@ class Evaluator:
         row = self.get_summary_row(index_dataset, index_colour_space)
         return self.summary[row][index_algorithm]
 
+    @staticmethod
+    def get_name(colour_space):
+        if type(colour_space) is dict:
+            if "name" in colour_space:
+                if colour_space["name"] is not None:
+                    return colour_space["name"]
+        if isinstance(colour_space, str):
+            return colour_space
+
     def process_algorithm_colour_space_dataset(self, index_algorithm, index_colour_space, index_dataset):
         algorithm = self.algorithms[index_algorithm]
         colour_space = self.colour_spaces[index_colour_space]
         dataset = self.datasets[index_dataset]
-        print("Start", f"{dataset} - {algorithm} - {colour_space}")
+
+        print("Start", f"{dataset} - {algorithm} - {self.get_name(colour_space)}")
 
         if self.get_score(index_dataset, index_algorithm, index_colour_space) != 0:
             print(f"{dataset} - {algorithm} - {colour_space} Was done already")
@@ -164,13 +174,7 @@ class Evaluator:
         index = []
         for dataset in self.datasets:
             for colour_space in self.colour_spaces:
-                name = ""
-                if type(colour_space) is dict:
-                    if "name" in colour_space:
-                        if colour_space["name"] is not None:
-                                name = colour_space["name"]
-                elif isinstance(colour_space, str):
-                    name = colour_space
+                name = self.get_name(colour_space)
 
                 index.append(f"{dataset} - {name}")
         return index
