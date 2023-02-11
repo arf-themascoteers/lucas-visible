@@ -182,9 +182,9 @@ class Evaluator:
         scores = []
         for i in range(self.repeat):
             if type(colour_space) is dict:
-                ds = ds_manager.DSManager(dataset, **colour_space, random_state=i)
+                ds = ds_manager.DSManager(dataset, **colour_space, random_state=i, folds=self.folds)
             else:
-                ds = ds_manager.DSManager(dataset, colour_space, random_state=i)
+                ds = ds_manager.DSManager(dataset, colour_space, random_state=i, folds=self.folds)
 
             for itr_no, (train_ds, test_ds) in enumerate(ds.get_k_folds()):
                 it_now = i*self.folds + itr_no
