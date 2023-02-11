@@ -4,7 +4,7 @@ from model_ann import ANN
 import time
 
 
-def train(device, ds, model=None, num_epochs=300):
+def train(device, ds, model=None, num_epochs=1000):
     torch.manual_seed(0)
     batch_size = 600
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
@@ -33,11 +33,6 @@ def train(device, ds, model=None, num_epochs=300):
             batch_number += 1
             #print(f'Epoch:{epoch + 1} (of {num_epochs}), Batch: {batch_number} of {n_batches}, Loss:{loss.item():.6f}')
 
-    #print("Train done")
-    # end = time.time()
-    # required = end - start
-    #print(f"Train seconds: {required}")
-    # torch.save(model, 'ann.h5')
     return model
 
 #

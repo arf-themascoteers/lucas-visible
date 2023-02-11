@@ -14,7 +14,7 @@ if __name__ == "__main__":
         datasets=["lucas"],
         algorithms=["nn"],
         colour_space_models=colour_space_models,
-        prefix="nn-hsv-si5",
+        prefix="res",
         verbose=True,
         folds=10,
         repeat=1
