@@ -20,7 +20,7 @@ def calculate_r2(train_ds, test_ds):
 def r2(dm):
     ss = []
     ps = []
-    for train_ds, test_ds in dm.get_10_folds():
+    for train_ds, test_ds in dm.get_k_folds():
         s,p = calculate_r2(train_ds, test_ds)
         ss.append(s)
         ps.append(p)

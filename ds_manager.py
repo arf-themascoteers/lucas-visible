@@ -7,7 +7,12 @@ from sklearn.model_selection import KFold
 
 
 class DSManager:
-    def __init__(self, dt, cspace, si=None, si_only=False, normalize = True, random_state=0):
+    def __init__(self, dt, cspace, si=None, si_only=False,
+                 normalize = True, random_state=0,
+                 name=None, folds=10
+                 ):
+        self.name = name
+        self.folds = folds
         if si is None:
             si = []
         csv_file_location = f"data/{dt}/{cspace}.csv"
@@ -42,18 +47,15 @@ class DSManager:
     def get_train_ds(self):
         return self.train_ds
 
-    def get_10_folds(self):
-        kf = KFold(n_splits=10)
+    def get_k_folds(self):
+        kf = KFold(n_splits=self.folds)
         for i, (train_index, test_index) in enumerate(kf.split(self.full_data)):
             train_data = self.full_data[train_index]
             test_data = self.full_data[test_index]
             yield SpectralDataset(train_data), SpectralDataset(test_data)
 
-    def get_count_itr(self):
-        i = 0
-        for train_ds, test_ds in self.get_10_folds():
-            i = i+1
-        return i
+    def get_folds(self):
+        return self.folds
 
     def _normalize(self, data):
         for i in range(data.shape[1]):

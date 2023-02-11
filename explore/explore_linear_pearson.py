@@ -20,7 +20,7 @@ def r2(dm):
     i0s = []
     i1s = []
     i2s = []
-    for train_ds, test_ds in dm.get_10_folds():
+    for train_ds, test_ds in dm.get_k_folds():
         i0, i1, i2 = calculate_r2(train_ds, test_ds)
         print(i0, i1, i2)
         i0s.append(i0)

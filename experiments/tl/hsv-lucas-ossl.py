@@ -29,8 +29,8 @@ ossl = ds_manager.DSManager("ossl","hsv")
 
 results = np.zeros((10,4))
 
-for lucas_index, (lucas_train, lucas_test) in enumerate(lucas.get_10_folds()):
-    for ossl_index, (ossl_train, ossl_test) in enumerate(ossl.get_10_folds()):
+for lucas_index, (lucas_train, lucas_test) in enumerate(lucas.get_k_folds()):
+    for ossl_index, (ossl_train, ossl_test) in enumerate(ossl.get_k_folds()):
         if lucas_index == ossl_index:
             lucas_result, ossl_result_lucas, ossl_result_calibrated, ossl_result_small_train = run_experiment(lucas_train, lucas_test, ossl_train, ossl_test)
             results[lucas_index][0] = lucas_result

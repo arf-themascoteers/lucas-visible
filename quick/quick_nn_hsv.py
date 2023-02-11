@@ -14,7 +14,7 @@ def calculate_r2(train_ds, test_ds):
 
 
 dm = ds_manager.DSManager("lucas","hsv")
-for train_ds, test_ds in dm.get_10_folds():
+for train_ds, test_ds in dm.get_k_folds():
     print(calculate_r2(dm.train_ds, dm.test_ds))
     break
 

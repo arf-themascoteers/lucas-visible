@@ -13,7 +13,12 @@ from sklearn.svm import SVR
 
 
 class Evaluator:
-    def __init__(self, datasets=None, algorithms=None, colour_space_models=None,prefix="", verbose=False):
+    def __init__(self, datasets=None, algorithms=None,
+                 colour_space_models=None, prefix="", verbose=False,
+                 repeat=1, folds=10
+                 ):
+        self.repeat = repeat
+        self.folds = folds
         self.datasets = datasets
         if self.datasets is None:
             self.datasets = ["lucas", "raca", "ossl"]
@@ -27,7 +32,7 @@ class Evaluator:
         for i in self.colour_spaces:
             if isinstance(i, str):
                 self.colour_space_names.append(i)
-            if type(i) is dict:
+            elif type(i) is dict:
                 self.colour_space_names.append(i["cspace"])
         self.verbose = verbose
         self.summary = np.zeros((len(self.colour_spaces) * len(self.datasets), len(self.algorithms)))
@@ -37,9 +42,7 @@ class Evaluator:
 
         self.summary_index = self.create_summary_index()
 
-        self.folds = [self.get_folds(i) for i in self.datasets]
-        self.detail_row_start = self.get_details_row_start()
-        self.details = np.zeros((sum(self.folds)*10, len(self.algorithms) * len(self.colour_spaces)))
+        self.details = np.zeros((len(self.datasets)*self.folds*self.repeat, len(self.algorithms) * len(self.colour_spaces)))
         self.details_index = self.get_details_index()
         self.details_columns = self.get_details_columns()
 
@@ -49,15 +52,6 @@ class Evaluator:
 
         self.TEST = False
         self.TEST_SCORE = 0
-
-    def get_details_row_start(self):
-        row_start = [0]
-        if len(self.datasets) == 1:
-            return row_start
-
-        for i in range(len(self.folds)-1):
-            row_start.append(row_start[i] + self.folds[i])
-        return row_start
 
     def get_details_columns(self):
         details_columns = []
@@ -69,34 +63,26 @@ class Evaluator:
     def get_details_index(self):
         details_index = []
         for index_dataset, dataset in enumerate(self.datasets):
-            for i in range(10):
-                for fold in range(self.folds[index_dataset]):
-                    num = i * 10 + fold
-                    details_index.append(f"{dataset}-{num}-{fold}")
+            for i in range(self.repeat):
+                for fold in range(self.folds):
+                    details_index.append(f"{dataset}-{i}-{fold}")
         return details_index
 
     def get_details_row(self, index_dataset, itr_no):
-        start = self.detail_row_start[index_dataset]
-        return start+itr_no
+        return index_dataset*self.folds*self.repeat + itr_no
 
     def get_details_column(self, index_algorithm, index_colour_space):
         return len(self.colour_spaces) * index_algorithm + index_colour_space
 
-
     def set_details(self, index_algorithm, index_colour_space, index_dataset, it_now, score):
         details_row = self.get_details_row(index_dataset, it_now)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
-        self.details[details_row][details_column] = round(score,3)
+        self.details[details_row][details_column] = score
 
     def get_details(self, index_algorithm, index_colour_space, index_dataset, it_now):
         details_row = self.get_details_row(index_dataset, it_now)
         details_column = self.get_details_column(index_algorithm, index_colour_space)
         return self.details[details_row][details_column]
-
-
-    def get_folds(self, dataset):
-        ds = ds_manager.DSManager(dataset, "rgb")
-        return ds.get_count_itr()
 
     def sync_summary_file(self):
         if not os.path.exists(self.summary_file):
@@ -178,7 +164,15 @@ class Evaluator:
         index = []
         for dataset in self.datasets:
             for colour_space in self.colour_spaces:
-                index.append(f"{dataset} - {colour_space}")
+                name = ""
+                if type(colour_space) is dict:
+                    if "name" in colour_space:
+                        if colour_space["name"] is not None:
+                                name = colour_space["name"]
+                elif isinstance(colour_space, str):
+                    name = colour_space
+
+                index.append(f"{dataset} - {name}")
         return index
 
     def calculate_scores_folds(self, index_algorithm, index_colour_space, index_dataset):
@@ -186,14 +180,14 @@ class Evaluator:
         colour_space = self.colour_spaces[index_colour_space]
         dataset = self.datasets[index_dataset]
         scores = []
-        for i in range(10):
+        for i in range(self.repeat):
             if type(colour_space) is dict:
                 ds = ds_manager.DSManager(dataset, **colour_space, random_state=i)
             else:
                 ds = ds_manager.DSManager(dataset, colour_space, random_state=i)
 
-            for itr_no, (train_ds, test_ds) in enumerate(ds.get_10_folds()):
-                it_now = i*10 + itr_no
+            for itr_no, (train_ds, test_ds) in enumerate(ds.get_k_folds()):
+                it_now = i*self.folds + itr_no
                 score = self.get_details(index_algorithm, index_colour_space, index_dataset, it_now)
                 if score != 0:
                     print(f"{it_now} done already")

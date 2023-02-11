@@ -1,6 +1,4 @@
 import torch.nn as nn
-import torch.nn.functional as F
-import torch
 
 
 class ANN(nn.Module):
@@ -9,12 +7,7 @@ class ANN(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(size, mid),
             nn.LeakyReLU(),
-            #nn.BatchNorm1d(mid),
-            nn.Linear(mid, 10),
-            #nn.Dropout(),
-            nn.LeakyReLU(),
-            #nn.BatchNorm1d(10),
-            nn.Linear(10, 1)
+            nn.Linear(mid, 1)
         )
 
     def forward(self, x):

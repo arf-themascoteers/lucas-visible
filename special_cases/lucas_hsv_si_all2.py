@@ -7,15 +7,17 @@ import ds_manager
 if __name__ == "__main__":
     sis = ds_manager.DSManager.si_list()
     colour_space_models = ["hsv"]
-    colour_space_models.append({"cspace":"hsv","si":sis})
-    colour_space_models.append({"cspace":"hsv","si":sis,"si_only":True})
+    colour_space_models.append({"cspace":"hsv","si":sis,"name":"hsv-si"})
+    colour_space_models.append({"cspace":"hsv","si":sis,"si_only":True,"name":"si"})
 
     ev = Evaluator(
         datasets=["lucas"],
         algorithms=["rf","nn"],
         colour_space_models=colour_space_models,
-        prefix="lucas_hsv_si_all2",
-        verbose=True
+        prefix="sp3",
+        verbose=True,
+        folds=3,
+        repeat=1
     )
     ev.process()
     print("Done all")
