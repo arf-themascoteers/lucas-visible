@@ -19,8 +19,7 @@ def train(device, ds, model=None, num_epochs=300):
         for (x, y) in dataloader:
             x = x.to(device)
             y = y.to(device)
-            x1, x2 = model(x)
-            loss = model.calculate_loss(x1, x2, y)
+            loss = model.calculate_loss(x, y)
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()

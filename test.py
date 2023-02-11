@@ -15,7 +15,7 @@ def test(device, ds, model):
     for (x, y) in dataloader:
         x = x.to(device)
         y = y.to(device)
-        y_hat = model.predict(x)
+        y_hat = model(x)
         r2 = r2_score(y.detach().cpu().numpy(), y_hat.detach().cpu().numpy())
         print(f"R^2 {r2:.4f}")
 
