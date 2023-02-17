@@ -152,13 +152,20 @@ class Evaluator:
             return colour_space
 
     @staticmethod
+    def get_alg_type(alg):
+        if type(alg) is dict:
+            return f"{alg['atype']}"
+        if isinstance(alg, str):
+            return alg
+
+    @staticmethod
     def get_alg_name(alg):
         if type(alg) is dict:
             if "name" in alg:
                 if alg["name"] is not None:
                     return alg["name"]
             else:
-                return f"{alg['alg']}"
+                return f"{alg['atype']}"
         if isinstance(alg, str):
             return alg
 
@@ -239,10 +246,10 @@ class Evaluator:
 
         model_instance = None
 
-        algorithm_name = self.get_alg_name(algorithm)
+        algorithm_type = self.get_alg_type(algorithm)
         nn_config = self.get_nn_config(algorithm)
 
-        if algorithm_name == "nn":
+        if algorithm_type == "nn":
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             model_instance = train(device, train_ds, nn_config = nn_config)
             return test(device, test_ds, model_instance)
