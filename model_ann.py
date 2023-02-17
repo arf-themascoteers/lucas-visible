@@ -12,11 +12,12 @@ import torch.nn as nn
 ## 100 20 1 - (bs 50) -> 717
 ## 100 20 1 - (Epoch 1000) -> 732
 # 200 1 - (Epoch 300) -> 708
+#==================================
 # 200 1 - (LR 0.001) -> 0.56
 # 200 1 - (LR 0.1) -> 0.56
 # 200 1 - (LR 0.01) -> 0.56
 ##=======================================
-# 3 50 1  ->
+# 3 50 1  -> 0.56
 # 3 50 3 1  ->
 # 3 200 3 1  ->
 # 3 200 10 1  ->
@@ -39,9 +40,9 @@ class ANN(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(size, mid),
             nn.LeakyReLU(),
-            nn.Linear(mid, 1),
-            # nn.LeakyReLU(),
-            # nn.Linear(mid, 1)
+            nn.Linear(mid, 10),
+            nn.LeakyReLU(),
+            nn.Linear(10, 1)
         )
 
     def forward(self, x):
