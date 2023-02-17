@@ -45,6 +45,7 @@ class Evaluator:
         self.details = np.zeros((len(self.datasets)*self.folds*self.repeat, len(self.algorithms) * len(self.colour_spaces)))
         self.details_index = self.get_details_index()
         self.details_columns = self.get_details_columns()
+        self.summary_columns = self.get_summary_columns()
 
         self.sync_summary_file()
         self.sync_details_file()
@@ -57,8 +58,15 @@ class Evaluator:
         details_columns = []
         for algorithm in self.algorithms:
             for colour_space in self.colour_spaces:
-                details_columns.append(f"{algorithm}-{colour_space}")
+                details_columns.append(f"{self.get_alg_name(algorithm)}-{self.get_cspace_name(colour_space)}")
         return details_columns
+
+    def get_summary_columns(self):
+        details_columns = []
+        for algorithm in self.algorithms:
+            details_columns.append(f"{self.get_alg_name(algorithm)}")
+        return details_columns
+
 
     def get_details_index(self):
         details_index = []
@@ -133,7 +141,7 @@ class Evaluator:
         return self.summary[row][index_algorithm]
 
     @staticmethod
-    def get_name(colour_space):
+    def get_cspace_name(colour_space):
         if type(colour_space) is dict:
             if "name" in colour_space:
                 if colour_space["name"] is not None:
@@ -143,12 +151,30 @@ class Evaluator:
         if isinstance(colour_space, str):
             return colour_space
 
+    @staticmethod
+    def get_alg_name(alg):
+        if type(alg) is dict:
+            if "name" in alg:
+                if alg["name"] is not None:
+                    return alg["name"]
+            else:
+                return f"{alg['alg']}"
+        if isinstance(alg, str):
+            return alg
+
+    @staticmethod
+    def get_nn_config(alg):
+        if type(alg) is dict:
+            return alg
+        return {}
+
+
     def process_algorithm_colour_space_dataset(self, index_algorithm, index_colour_space, index_dataset):
         algorithm = self.algorithms[index_algorithm]
         colour_space = self.colour_spaces[index_colour_space]
         dataset = self.datasets[index_dataset]
 
-        print("Start", f"{dataset} - {algorithm} - {self.get_name(colour_space)}")
+        print("Start", f"{dataset} - {self.get_alg_name(algorithm)} - {self.get_cspace_name(colour_space)}")
 
         if self.get_score(index_dataset, index_algorithm, index_colour_space) != 0:
             print(f"{dataset} - {algorithm} - {colour_space} Was done already")
@@ -176,7 +202,7 @@ class Evaluator:
         index = []
         for dataset in self.datasets:
             for colour_space in self.colour_spaces:
-                name = self.get_name(colour_space)
+                name = self.get_cspace_name(colour_space)
 
                 index.append(f"{dataset} - {name}")
         return index
@@ -212,9 +238,13 @@ class Evaluator:
             return self.TEST_SCORE
 
         model_instance = None
-        if algorithm == "nn":
+
+        algorithm_name = self.get_alg_name(algorithm)
+        nn_config = self.get_nn_config(algorithm)
+
+        if algorithm_name == "nn":
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            model_instance = train(device, train_ds)
+            model_instance = train(device, train_ds, nn_config = nn_config)
             return test(device, test_ds, model_instance)
         else:
             train_x = train_ds.get_x()

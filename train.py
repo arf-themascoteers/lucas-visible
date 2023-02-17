@@ -4,16 +4,27 @@ from model_ann import ANN
 import time
 
 
-def train(device, ds, model=None, num_epochs=300):
+def train(device, ds, model=None, nn_config=None):
     torch.manual_seed(0)
-    batch_size = 6000
+    DEBUG = True
+    if nn_config is None:
+        nn_config = {"num_epochs":300, "batch_size":6000,
+                     "lr" : 0.001, "mid" : [200]
+                     }
+    num_epochs = nn_config["num_epochs"]
+    batch_size = nn_config["batch_size"]
+    lr = nn_config["lr"]
+    mid = nn_config["mid"]
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
     x_size = ds.get_x().shape[1]
     if model is None:
-        model = ANN(size = x_size)
+        model = ANN(size = x_size, mid=mid)
+    if DEBUG:
+        print(num_epochs, batch_size, lr, mid)
+        print(model)
     model.train()
     model.to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=0.001)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.001)
     criterion = torch.nn.MSELoss(reduction='sum')
     n_batches = int(len(ds)/batch_size) + 1
     batch_number = 0
