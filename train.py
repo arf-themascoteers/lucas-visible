@@ -4,7 +4,7 @@ from model_ann import ANN
 import time
 
 
-def train(device, ds, model=None, num_epochs=1000):
+def train(device, ds, model=None, num_epochs=300):
     torch.manual_seed(0)
     batch_size = 600
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
