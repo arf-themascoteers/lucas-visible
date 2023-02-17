@@ -13,7 +13,7 @@ if __name__ == "__main__":
         colour_space_models.append({"cspace":"hsv", "si":[x], "si_only":True})
     ev = Evaluator(
         datasets=["lucas"],
-        algorithms=["linear"],
+        algorithms=["lr"],
         colour_space_models=colour_space_models,
         prefix="lucas_hsv_si_lr",
         verbose=True

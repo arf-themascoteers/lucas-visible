@@ -6,7 +6,7 @@ from evaluator import Evaluator
 if __name__ == "__main__":
     ev = Evaluator(
         datasets=["lucas"],
-        algorithms=["linear"],
+        algorithms=["lr"],
         colour_space_models=["hue"],
         prefix="hue",
         verbose=True

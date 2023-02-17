@@ -24,7 +24,7 @@ class Evaluator:
             self.datasets = ["lucas", "raca", "ossl"]
         self.algorithms = algorithms
         if self.algorithms is None:
-            self.algorithms = ["linear", "plsr", "rf", "svr", "nn"]
+            self.algorithms = ["lr", "plsr", "rf", "svr", "nn"]
         self.colour_spaces = colour_space_models
         if self.colour_spaces is None:
             self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
@@ -114,7 +114,7 @@ class Evaluator:
         log_file.close()
 
     def write_summary(self):
-        df = pd.DataFrame(data=self.summary, columns=self.algorithms, index=self.summary_index)
+        df = pd.DataFrame(data=self.summary, columns=self.summary_columns, index=self.summary_index)
         df.to_csv(self.summary_file)
 
     def write_details(self):
@@ -259,13 +259,13 @@ class Evaluator:
             test_x = test_ds.get_x()
             test_y = test_ds.get_y()
 
-            if algorithm == "linear":
+            if algorithm_type == "lr":
                 model_instance = LinearRegression()
-            elif algorithm == "plsr":
+            elif algorithm_type == "plsr":
                 model_instance = PLSRegression(n_components=2)
-            elif algorithm == "rf":
+            elif algorithm_type == "rf":
                 model_instance = RandomForestRegressor(max_depth=5, n_estimators=100)
-            elif algorithm == "svr":
+            elif algorithm_type == "svr":
                 model_instance = SVR()
 
 
