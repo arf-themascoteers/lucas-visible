@@ -138,6 +138,8 @@ class Evaluator:
             if "name" in colour_space:
                 if colour_space["name"] is not None:
                     return colour_space["name"]
+            else:
+                return f"{colour_space['cspace']}"
         if isinstance(colour_space, str):
             return colour_space
 
