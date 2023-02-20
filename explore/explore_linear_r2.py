@@ -10,7 +10,8 @@ from sklearn.metrics import r2_score
 
 def predict(dm):
     model_instance = LinearRegression().fit(dm.full_ds.get_x(), dm.full_ds.get_y())
-    return model_instance.score(dm.full_ds.get_x(), dm.full_ds.get_y())
+    y_hat = model_instance.predict(dm.full_ds.get_x())
+    return dm.full_ds.get_y(), y_hat, r2_score(dm.full_ds.get_y(), y_hat)
 
 
 dss = ["lucas","raca","ossl"]
@@ -21,7 +22,7 @@ ar = np.zeros((len(dss),len(css)))
 for ds_index, ds in enumerate(dss):
     for cs_index, cs in enumerate(css):
         dm = ds_manager.DSManager(ds, cs)
-        r2 = predict(dm)
+        y, y_hat, r2 = predict(dm)
         print(f"{cs} {ds} {r2}")
         ar[ds_index,cs_index] = np.round(r2,3)
 
