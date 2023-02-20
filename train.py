@@ -5,16 +5,20 @@ import time
 
 
 def train(device, ds, model=None, nn_config=None):
+    DEFAULT_NUM_EPOCHS = 300
+    DEFAULT_BATCH_SIZE = 600
+    DEFAULT_LEARNING_RATE = 0.001
+    DEFAULT_MID_LAYERS = [300, 20]
     torch.manual_seed(0)
     TEST = False
     if nn_config is None:
-        nn_config = {"num_epochs":300, "batch_size":6000,
-                     "lr" : 0.001, "mid" : [200]
+        nn_config = {"num_epochs": DEFAULT_NUM_EPOCHS, "batch_size":DEFAULT_BATCH_SIZE,
+                     "lr" : DEFAULT_LEARNING_RATE, "mid" : DEFAULT_MID_LAYERS
                      }
-    num_epochs = nn_config["num_epochs"] if "num_epochs" in nn_config else 300
-    batch_size = nn_config["batch_size"] if "batch_size" in nn_config else 6000
-    lr = nn_config["lr"] if "lr" in nn_config else 0.001
-    mid = nn_config["mid"] if "mid" in nn_config else [200]
+    num_epochs = nn_config["num_epochs"] if "num_epochs" in nn_config else DEFAULT_NUM_EPOCHS
+    batch_size = nn_config["batch_size"] if "batch_size" in nn_config else DEFAULT_BATCH_SIZE
+    lr = nn_config["lr"] if "lr" in nn_config else DEFAULT_LEARNING_RATE
+    mid = nn_config["mid"] if "mid" in nn_config else DEFAULT_MID_LAYERS
     dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
     x_size = ds.get_x().shape[1]
     if model is None:

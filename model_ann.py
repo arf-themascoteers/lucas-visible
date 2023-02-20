@@ -4,8 +4,9 @@ import torch.nn as nn
 class ANN(nn.Module):
     def __init__(self, size=3, mid=None):
         super().__init__()
+        DEFAULT_MID_LAYERS = [300, 20]
         if mid is None:
-            mid = [200]
+            mid = DEFAULT_MID_LAYERS
         layer_size = [size] + mid + [1]
         self.fc = nn.Sequential()
         for i in range(len(layer_size) - 2):

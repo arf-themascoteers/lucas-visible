@@ -27,7 +27,8 @@ class Evaluator:
             self.algorithms = ["lr", "plsr", "rf", "svr", "nn"]
         self.colour_spaces = colour_space_models
         if self.colour_spaces is None:
-            self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
+            #self.colour_spaces = ["rgb", "hsv", "hsv_xy", "XYZ", "xyY", "cielab"]
+            self.colour_spaces = ["rgb", "hsv", "cielab"]
         self.colour_space_names = []
         for i in self.colour_spaces:
             if isinstance(i, str):
