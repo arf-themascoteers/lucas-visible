@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-df = pd.read_csv("play/details4.csv")
+df = pd.read_csv("play/details6.csv")
 df2 = df.iloc[: , 1:]
 results = df2.to_numpy()
 

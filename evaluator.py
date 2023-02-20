@@ -15,11 +15,12 @@ from sklearn.svm import SVR
 class Evaluator:
     def __init__(self, datasets=None, algorithms=None,
                  colour_space_models=None, prefix="", verbose=False,
-                 repeat=1, folds=10
+                 repeat=1, folds=10, calc_mean = False
                  ):
         self.repeat = repeat
         self.folds = folds
         self.datasets = datasets
+        self.calc_mean = calc_mean
         if self.datasets is None:
             self.datasets = ["lucas", "raca", "ossl"]
         self.algorithms = algorithms
@@ -40,6 +41,7 @@ class Evaluator:
         self.summary_file = f"results/{prefix}_summary.csv"
         self.details_file = f"results/{prefix}_details.csv"
         self.log_file = f"results/{prefix}_log.txt"
+        self.mean_file = f"results/{prefix}_mean.csv"
 
         self.summary_index = self.create_summary_index()
 
@@ -205,6 +207,7 @@ class Evaluator:
     def process(self):
         for index_algorithm, algorithm in enumerate(self.algorithms):
             self.process_algorithm(index_algorithm)
+        self.calculate_mean()
 
     def create_summary_index(self):
         index = []
@@ -213,6 +216,13 @@ class Evaluator:
                 name = self.get_cspace_name(colour_space)
 
                 index.append(f"{dataset} - {name}")
+        return index
+
+    def create_mean_index(self):
+        index = []
+        for colour_space in self.colour_spaces:
+            name = self.get_cspace_name(colour_space)
+            index.append(name)
         return index
 
     def calculate_scores_folds(self, index_algorithm, index_colour_space, index_dataset):
@@ -273,8 +283,25 @@ class Evaluator:
             model_instance = model_instance.fit(train_x, train_y)
             return model_instance.score(test_x, test_y)
 
+    def calculate_mean(self):
+        mean = np.zeros((len(self.colour_spaces), len(self.algorithms)))
+
+        for index_colour_space, colour_space in enumerate(self.colour_spaces):
+            for index_algorithm, algorithm in enumerate(self.algorithms):
+                mean[index_colour_space, index_algorithm] = \
+                    self.calculate_mean_algorithm_colour_space(index_algorithm, index_colour_space)
+
+        df = pd.DataFrame(data=mean, columns=self.summary_columns, index=self.create_mean_index())
+        df.to_csv(self.mean_file)
+
+    def calculate_mean_algorithm_colour_space(self, index_algorithm, index_colour_space):
+        score = 0
+        for index_dataset, dataset in enumerate(self.datasets):
+            score = score + self.get_score(index_dataset, index_algorithm, index_colour_space)
+        return np.round(score/len(self.datasets),3)
+
 
 if __name__ == "__main__":
-    ev = Evaluator()
+    ev = Evaluator(calc_mean=True)
     ev.process()
     print("Done all")
