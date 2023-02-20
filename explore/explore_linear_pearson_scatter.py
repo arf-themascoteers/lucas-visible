@@ -43,7 +43,7 @@ for cs in ["hsv", "cielab"]:
     for ds in ["lucas", "raca", "ossl"]:
         dm = ds_manager.DSManager(ds, cs, normalize=False)
         draw(dm.full_data)
-        exit()
+
 
     print(cs)
 

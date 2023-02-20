@@ -12,9 +12,9 @@ from test import test
 
 def predict(dm):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model_instance = torch.load("soc.h5")
-    # model_instance = train(device, dm.train_ds, nn_config={"num_epochs":100})
-    # torch.save(model_instance,"soc.h5")
+    #model_instance = torch.load("soc.h5")
+    model_instance = train(device, dm.train_ds, nn_config={"num_epochs":100})
+    torch.save(model_instance,"soc.h5")
     r2, y_hat = test(device, dm.test_ds, model_instance, return_pred=True)
     y = dm.test_ds.get_y()
     return y, y_hat, r2
