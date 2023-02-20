@@ -1,5 +1,5 @@
 from conversion.lucas import one_time_lucas_rgb_abs_to_refl
-from conversion import  cielab, hsv, hsv_xy, xyY, XYZ, hue, saturation, value, l,a,b
+from conversion import  cielab, hsv, hsv_xy, xyY, XYZ, hue, saturation, value, l,a,b, red, green, blue
 import os
 
 
@@ -13,6 +13,10 @@ def process(base):
     data_XYZ = f"{basedir}/XYZ.csv"
     data_xyY = f"{basedir}/xyY.csv"
     data_cielab = f"{basedir}/cielab.csv"
+
+    data_red = f"{basedir}/red.csv"
+    data_green = f"{basedir}/green.csv"
+    data_blue = f"{basedir}/blue.csv"
 
     data_hue = f"{basedir}/hue.csv"
     data_saturation = f"{basedir}/saturation.csv"
@@ -30,13 +34,17 @@ def process(base):
     # xyY.process(data_XYZ, data_xyY)
     # cielab.process(data_XYZ, data_cielab)
 
-    hue.process(data_hsv, data_hue)
-    saturation.process(data_hsv, data_saturation)
-    value.process(data_hsv, data_value)
+    # hue.process(data_hsv, data_hue)
+    # saturation.process(data_hsv, data_saturation)
+    # value.process(data_hsv, data_value)
+    #
+    # l.process(data_cielab, data_l)
+    # a.process(data_cielab, data_a)
+    # b.process(data_cielab, data_b)
 
-    l.process(data_cielab, data_l)
-    a.process(data_cielab, data_a)
-    b.process(data_cielab, data_b)
+    red.process(data_rgb, data_red)
+    green.process(data_rgb, data_green)
+    blue.process(data_rgb, data_blue)
 
     print("Done preparing all datasets for",base)
 
