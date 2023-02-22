@@ -275,7 +275,7 @@ class Evaluator:
             elif algorithm_type == "plsr":
                 model_instance = PLSRegression(n_components=2)
             elif algorithm_type == "rf":
-                model_instance = RandomForestRegressor(max_depth=5, n_estimators=100)
+                model_instance = RandomForestRegressor(max_depth=4, n_estimators=100)
             elif algorithm_type == "svr":
                 model_instance = SVR()
 

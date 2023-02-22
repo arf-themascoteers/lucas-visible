@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-df = pd.read_csv("play/details6.csv")
-df2 = df.iloc[: , 1:]
-results = df2.to_numpy()
+df = pd.read_csv("play/d9.csv")
+results = df.to_numpy()
 
 pvalues = np.zeros((results.shape[1], results.shape[1]))
 

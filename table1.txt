@@ -1,0 +1,30 @@
+\begin{table}
+\centering
+\caption{Coefficient of determination (R2) with SOC and Feature Importance (FI) in ANN on SOC estimation of all colour components for the three datasets (LUCAS, RaCA, OSSL) and the mean.}
+\label{corr-fi}
+\begin{tabular}{| l | l | r | r | r | r |r | r | r | r |}
+\hline
+\textbf{Colour Model} & \textbf{Component} &  \multicolumn{2}{c|}{\textbf{LUCAS}} &  \multicolumn{2}{c|}{\textbf{RaCA}} &   \multicolumn{2}{c|}{\textbf{OSSL}} & \multicolumn{2}{c|}{\textbf{mean}} \\
+\cline{3-10}
+ &  &  $\bm{R^2}$ &  \textbf{FI} &  $\bm{R^2}$ &  \textbf{FI} &  $\bm{R^2}$ &  \textbf{FI}  &  $\bm{R^2}$ &  \textbf{FI} \\
+\hline
+
+            \multirow{3}{}{RGB} & R & 0.239 & 0.186 & 0.218 & 0.237 & 0.195 & 0.166  & 0.217 & 0.196  \\ \cline{2-10}
+                               & G & 0.233   & 0.536 & 0.233 & 0.603 & 0.194  & 0.505  & \textbf{0.220} & \textbf{0.548}  \\ \cline{2-10}
+                               & B & 0.192   & 0.279 & 0.213 & 0.160  & 0.159 & 0.328  & 0.188 & 0.256  \\ \cline{2-10}
+
+\hline
+\hline
+            \multirow{3}{}{HSV} & H & 0.299   & 0.518 & 0.099 & 0.716  & 0.075 & 0.853 & 0.158  & \textbf{0.696}   \\ \cline{2-10}
+                               & S & 0.003   & 0.168  & 0.002 & 0.077  & 0.001 & 0.050  & 0.008 & 0.099  \\ \cline{2-10}
+                               & V & 0.239  & 0.314 & 0.218 & 0.206  & 0.195 & 0.097  & \textbf{0.217} & 0.206  \\ \cline{2-10}
+\hline
+\hline
+
+            \multirow{3}{}{\mbox{CIE L*a*b*}} & L* & 0.245 & 0.260 & 0.235 & 0.479  & 0.206 & 0.225  & \textbf{0.229} & 0.321 \\ \cline{2-10}
+                               & a* & 0.051   & 0.327 & 0.010 & 0.261  & 0.012 & 0.384 & 0.024  & 0.324  \\ \cline{2-10}
+                               & b* & 0.247  & 0.413 & 0.172 & 0.260  & 0.157 & 0.392 & 0.192  & \textbf{0.355}  \\ \cline{2-10}
+
+\hline
+\end{tabular}
+\end{table}

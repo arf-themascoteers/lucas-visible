@@ -8,7 +8,7 @@ def train(device, ds, model=None, nn_config=None):
     DEFAULT_NUM_EPOCHS = 300
     DEFAULT_BATCH_SIZE = 600
     DEFAULT_LEARNING_RATE = 0.001
-    DEFAULT_MID_LAYERS = [50, 20]
+    DEFAULT_MID_LAYERS = [30, 10]
     torch.manual_seed(0)
     TEST = False
     if nn_config is None:
