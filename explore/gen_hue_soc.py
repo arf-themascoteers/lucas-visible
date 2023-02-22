@@ -16,31 +16,30 @@ def plot_comp(c, y, ax):
     c = c.reshape(-1)
     x_vals = np.linspace(np.min(c),np.max(c),100)
     y_vals = x_vals * coef + i
-    ax.scatter(c,y)
+    ax.set_ylim(0,100)
+    ax.scatter(c,y, s=1)
     ax.plot(x_vals, y_vals, "g")
+    plt.xlabel('Hue')
+    plt.ylabel('SOC')
 
 def draw(data):
-    fig, ax = plt.subplots(3, 1)
-    data = data[data[:,3]<50]
-    data = data[0:100,:]
+    fig, ax = plt.subplots(1, 1)
+    # data = data[data[:,3]<50]
+    data = data[0:1000,:]
     h = data[:,0:1]
-    s = data[:,1:2]
-    v = data[:,2:3]
     y = data[:,-1]
-    plot_comp(h,y, ax[0])
-    plot_comp(s,y, ax[1])
-    plot_comp(v,y, ax[2])
+    plot_comp(h,y, ax)
     fig.tight_layout(pad=1.0)
     plt.show()
 
 
 #["rgb", "hsv", "cielab"]
-for cs in ["hsv", "cielab"]:
+for cs in ["hue"]:
     r2_1s = []
     r2_2s = []
     r2_3s = []
 
-    for ds in ["lucas", "raca", "ossl"]:
+    for ds in ["lucas"]:
         dm = ds_manager.DSManager(ds, cs, normalize=False)
         draw(dm.full_data)
 
