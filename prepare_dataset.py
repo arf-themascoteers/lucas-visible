@@ -1,4 +1,5 @@
 from conversion.lucas import one_time_lucas_rgb_abs_to_refl
+from conversion.ossl import one_time_oss_rgb_normalize
 from conversion import  cielab, hsv, hsv_xy, xyY, XYZ, hue, saturation, value, l,a,b, red, green, blue
 import os
 
@@ -28,19 +29,19 @@ def process(base):
 
 
 
-    # hsv.process(data_rgb, data_hsv)
-    # hsv_xy.process(data_hsv, data_hsv_xy)
-    # XYZ.process(data_rgb, data_XYZ)
-    # xyY.process(data_XYZ, data_xyY)
-    # cielab.process(data_XYZ, data_cielab)
+    hsv.process(data_rgb, data_hsv)
+    #hsv_xy.process(data_hsv, data_hsv_xy)
+    XYZ.process(data_rgb, data_XYZ)
+    #xyY.process(data_XYZ, data_xyY)
+    cielab.process(data_XYZ, data_cielab)
 
-    # hue.process(data_hsv, data_hue)
-    # saturation.process(data_hsv, data_saturation)
-    # value.process(data_hsv, data_value)
-    #
-    # l.process(data_cielab, data_l)
-    # a.process(data_cielab, data_a)
-    # b.process(data_cielab, data_b)
+    hue.process(data_hsv, data_hue)
+    saturation.process(data_hsv, data_saturation)
+    value.process(data_hsv, data_value)
+
+    l.process(data_cielab, data_l)
+    a.process(data_cielab, data_a)
+    b.process(data_cielab, data_b)
 
     red.process(data_rgb, data_red)
     green.process(data_rgb, data_green)
@@ -50,7 +51,8 @@ def process(base):
 
 
 if __name__ == "__main__":
-    # one_time_lucas_rgb_abs_to_refl.process()
+    one_time_oss_rgb_normalize.process()
+    one_time_lucas_rgb_abs_to_refl.process()
     process("lucas")
     process("raca")
     process("ossl")

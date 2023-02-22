@@ -4,7 +4,7 @@ import torch.nn as nn
 class ANN(nn.Module):
     def __init__(self, size=3, mid=None):
         super().__init__()
-        DEFAULT_MID_LAYERS = [300, 20]
+        DEFAULT_MID_LAYERS = [50, 20]
         if mid is None:
             mid = DEFAULT_MID_LAYERS
         layer_size = [size] + mid + [1]
