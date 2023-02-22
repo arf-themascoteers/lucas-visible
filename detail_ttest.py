@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-df = pd.read_csv("play/d9.csv")
+df = pd.read_csv("play/d12.csv")
 results = df.to_numpy()
 
 pvalues = np.zeros((results.shape[1], results.shape[1]))
@@ -21,7 +21,8 @@ for i in range(results.shape[1]):
             pvalues[i, j] = 0
 
 #columns = list(df2.columns)
-columns = ["RF-HSV","RF-CIE L*a*b*","ANN-HSV","ANN-CIE L*a*b*"]
+#columns = ["RF-HSV","RF-CIE L*a*b*","ANN-HSV","ANN-CIE L*a*b*"]
+columns = ["RF-RGB","RF-HSV","RF-L*a*b*","ANN-RGB","ANN-HSV","ANN-L*a*b*"]
 
 mask = np.triu(np.ones_like(pvalues, dtype=bool))
 for i in range(mask.shape[0]):
