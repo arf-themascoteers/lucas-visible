@@ -32,15 +32,20 @@ def calculate_grads(dm:ds_manager.DSManager, c):
     return grads[0].item(), grads[1].item(), grads[2].item()
 
 
-results = np.zeros((15,3))
-for cspace, c in enumerate(["rgb", "hsv", "XYZ", "xyY", "cielab"]):
-    for col, ds in enumerate(["lucas", "raca", "ossl"]):
+css = ["rgb","hsv","cielab"]
+dss = ["lucas", "raca", "ossl"]
+filename = "impacts2.csv"
+results = np.zeros((9,3))
+for cspace, c in enumerate(css):
+    for col, ds in enumerate(dss):
         dm = ds_manager.DSManager(ds, c)
         i0, i1, i2 = calculate_grads(dm, c)
         start_index = cspace*3
         results[start_index, col] = i0
         results[start_index + 1, col] = i1
         results[start_index + 2, col] = i2
-        df = pd.DataFrame(results, columns = ['lucas', 'raca', 'ossl'])
-        df.to_csv("impacts.csv", index=False)
 
+means = np.mean(results, axis=1, keepdims=True)
+results = np.round(np.concatenate((results,means), axis=1),2)
+df = pd.DataFrame(results, columns=dss+["mean"])
+df.to_csv(filename, index=False)

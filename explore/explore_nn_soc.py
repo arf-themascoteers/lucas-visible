@@ -32,11 +32,11 @@ for ds_index, ds in enumerate(dss):
         print(f"{cs} {ds} {r2}")
         ar[ds_index,cs_index] = np.round(r2,3)
 
-means = np.mean(ar, axis=0, keepdims=True)
+means = np.round(np.mean(ar, axis=0, keepdims=True))
 ar = np.concatenate((ar,means), axis=0)
 
 df = pd.DataFrame(data=ar, columns=css, index=dss+["mean"])
-df.to_csv("nn_impact.csv")
+df.to_csv("nn_impact2.csv")
 
 
 

@@ -43,9 +43,7 @@ def draw(dm, ax):
 
 
 dss = ["lucas","raca","ossl"]
-dss = ["lucas"]
 css = ["red","green","blue","hue","saturation","value","l","a","b"]
-css = ["hue"]
 fig, ax = plt.subplots(1, 1)
 fig.tight_layout(pad=1.0)
 ar = np.zeros((len(dss),len(css)))
