@@ -1,0 +1,18 @@
+evaluate all - 1/soc-----------not today
+
+
+In progress
+================
+perform
+
+finding
+=============
+red dominant
+
+===to add -> the r^2 of red and value same
+
+todo
+====
+check if nn-hsv tops all
+update tables, ttest fig based on the results
+check abstract/discussion against updated table/fig

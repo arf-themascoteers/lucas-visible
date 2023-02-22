@@ -10,4 +10,4 @@ explore_nn_soc.py -> nn_impact3.csv
 
 ===
 
-Update abstract, discussion
+Update abstract, discussion when results/figures updated
