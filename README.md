@@ -7,3 +7,7 @@ Table-2: explore_linear_r2.py, explore_all_n2
 Explore
 
 explore_nn_soc.py -> nn_impact3.csv
+
+===
+
+Update abstract, discussion
