@@ -273,7 +273,10 @@ class Evaluator:
             if algorithm_type == "lr":
                 model_instance = LinearRegression()
             elif algorithm_type == "plsr":
-                model_instance = PLSRegression(n_components=2)
+                size = train_x.shape[1]//2
+                if size == 0:
+                    size = 1
+                model_instance = PLSRegression(n_components=size)
             elif algorithm_type == "rf":
                 model_instance = RandomForestRegressor(max_depth=4, n_estimators=100)
             elif algorithm_type == "svr":

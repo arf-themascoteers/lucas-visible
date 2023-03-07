@@ -11,3 +11,10 @@ explore_nn_soc.py -> nn_impact3.csv
 ===
 
 Update abstract, discussion when results/figures updated
+=============
+
+
+SIS - next step
+
+1. find optimal subset
+2. try more repeats, varied neurons

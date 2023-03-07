@@ -1,19 +1,20 @@
-evaluate all - 1/soc-----------not today
+cite raca
 
+further works
 
-In progress
-================
-perform
+----check lucas papers with unskew
+---------any research scope?
+
+check "future" and other paper ideas
+
+start with sat mapping?
+
+=============
 
 finding
 =============
 red dominant
 
-===to add -> the r^2 of red and value same
+===to add -> the r^2 of red and value same (ask shyh wei?)
 
-todo
-====
-check if nn-hsv tops all
-update tables, ttest fig based on the results
-check abstract/discussion against updated table/fig
-refer raca
+
