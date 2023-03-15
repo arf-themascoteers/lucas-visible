@@ -18,3 +18,6 @@ SIS - next step
 
 1. find optimal subset
 2. try more repeats, varied neurons
+
+===
+490 nm, 560 nm, and 665 nm
