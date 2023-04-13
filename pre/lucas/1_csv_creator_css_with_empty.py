@@ -56,7 +56,7 @@ def create_csv():
                           f"{topsoil_row['silt']},{topsoil_row['phc']},{topsoil_row['phh']},{topsoil_row['ec']},"
                           f"{topsoil_row['caco3']},{topsoil_row['p']},{topsoil_row['n']},{topsoil_row['k']},"
                           f"{topsoil_row['elevation']},{topsoil_row['lc1']},{topsoil_row['lu1']},{topsoil_row['stones']},"
-                          f"{topsoil_row['oc']},{topsoil_row['lon']},{topsoil_row['lat']}")
+                          f"{topsoil_row['lon']},{topsoil_row['lat']},{topsoil_row['oc']}")
 
                 out.write("\n")
                 done.append(point_id)
