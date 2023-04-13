@@ -19,6 +19,7 @@ def create_csv():
 
     topsoil_df = topsoil_df.merge(gc_df,on="Point_ID")
     topsoil_df = topsoil_df.set_axis(["point_id","coarse","clay","sand","silt","phc","phh","ec","caco3","p","n","k","elevation","lc1","lu1","stones","oc","lon","lat"], axis=1)
+    topsoil_df = topsoil_df[["point_id","coarse","clay","sand","silt","phc","phh","ec","caco3","p","n","k","elevation","lc1","lu1","stones","lon","lat","oc"]]
     topsoil_df.to_csv(out_file, index=False)
     print("done")
 

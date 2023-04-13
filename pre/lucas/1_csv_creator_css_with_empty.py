@@ -6,7 +6,7 @@ import pandas as pd
 
 def create_csv():
     spectra_src_dir = "data/spectra"
-    topsoil_file = "data/topsoil/topsoil.csv"
+    topsoil_file = "data/topsoil/topsoilx.csv"
     out_file = "data/out/full_css_with_empty.csv"
 
     topsoil_df = pd.read_csv(topsoil_file)
@@ -18,7 +18,7 @@ def create_csv():
             the_str = str(int(spec))
         out.write(f"{the_str},")
         spec = spec+0.5
-    out.write("phc,phh,ec,caco3,p,n,k,elevation,lc1,lu1,stones,clay,sand,silt,oc")
+    out.write("point_id,coarse,clay,sand,silt,phc,phh,ec,caco3,p,n,k,elevation,lc1,lu1,stones,lon,lat,oc")
     out.write("\n")
     done = []
     for file in os.listdir(spectra_src_dir):
@@ -35,7 +35,7 @@ def create_csv():
                 point_id = spectra_row['PointID']
                 if point_id in done:
                     continue
-                rows = (topsoil_df.loc[topsoil_df['Point_ID'] == point_id])
+                rows = (topsoil_df.loc[topsoil_df['point_id'] == point_id])
                 if len(rows) == 0:
                     print(point_id)
                     continue
@@ -50,11 +50,12 @@ def create_csv():
                     val = str(val)
                     out.write(f"{spectra_row[val]},")
                     spec = spec + 0.5
-
-                out.write(f"{topsoil_row['pH(CaCl2)']},{topsoil_row['pH(H2O)']},{topsoil_row['EC']},{topsoil_row['CaCO3']},{topsoil_row['P']},{topsoil_row['N']},"
-                          f"{topsoil_row['K']},{topsoil_row['Elevation']},{topsoil_row['LC1']},{topsoil_row['LU1']},{topsoil_row['Soil_Stones']},"
-                          f"{topsoil_row['Clay']},{topsoil_row['Sand']},{topsoil_row['Silt']},"
-                          f"{topsoil_row['OC']}")
+                #"point_id,coarse,clay,sand,silt,phc,phh,ec,caco3,p,n,k,elevation,lc1,lu1,stones,oc,lon,lat"
+                out.write(f"{topsoil_row['point_id']},{topsoil_row['coarse']},{topsoil_row['clay']},{topsoil_row['sand']},"
+                          f"{topsoil_row['silt']},{topsoil_row['phc']},{topsoil_row['phh']},{topsoil_row['ec']},"
+                          f"{topsoil_row['caco3']},{topsoil_row['p']},{topsoil_row['n']},{topsoil_row['k']},"
+                          f"{topsoil_row['elevation']},{topsoil_row['lc1']},{topsoil_row['lu1']},{topsoil_row['stones']},"
+                          f"{topsoil_row['oc']},{topsoil_row['lon']},{topsoil_row['lat']}")
 
                 out.write("\n")
                 done.append(point_id)
