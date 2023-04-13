@@ -1,15 +1,16 @@
 import os
-
-import numpy as np
 import pandas as pd
 
+NAN = -9999
 
 def create_csv():
     spectra_src_dir = "data/spectra"
     topsoil_file = "data/topsoil/topsoilx.csv"
-    out_file = "data/out/full_css_with_empty.csv"
+    out_file = "data/out/full_with_empty.csv"
 
     topsoil_df = pd.read_csv(topsoil_file)
+    topsoil_df = topsoil_df.fillna(NAN)
+
     out = open(out_file, "w")
     spec = 400
     while spec <= 2499.5:
